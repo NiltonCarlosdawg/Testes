@@ -1,0 +1,11 @@
+.modal-backdrop {
+  @apply fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity duration-300;
+}
+.modal-backdrop.show { @apply opacity-100; }
+.modal-backdrop.hide { @apply opacity-0; }
+
+.modal-panel {
+  @apply inline-block transform overflow-hidden rounded-lg bg-white dark:bg-gray-800 text-left align-bottom shadow-xl transition-all duration-300 sm:my-8 sm:w-full sm:max-w-lg sm:align-middle;
+}
+.modal-panel.show { @apply translate-y-0 opacity-100 scale-100; }
+.modal-panel.hide { @apply translate-y-4 opacity-0 scale-95; }

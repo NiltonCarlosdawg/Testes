@@ -1,0 +1,22 @@
+npm warn Unknown project config "shamefully-hoist". This will stop working in the next major version of npm.
+
+> next-shadcn-dashboard-starter@1.0.0 dev
+> next dev --turbopack
+
+ ⚠ Port 3000 is in use, using available port 3003 instead.
+   ▲ Next.js 15.3.2 (Turbopack)
+   - Local:        http://localhost:3003
+   - Network:      http://192.168.43.203:3003
+   - Environments: .env
+
+ ✓ Starting...
+ ○ Compiling instrumentation Node.js ...
+ ✓ Compiled instrumentation Node.js in 2.6s
+ ✓ Compiled instrumentation Edge in 219ms
+ ✓ Compiled middleware in 380ms
+ ✓ Ready in 5.3s
+   Reload env: .env
+   Reload env: .env
+   Reload env: .env
+   Reload env: .env
+   Reload env: .env

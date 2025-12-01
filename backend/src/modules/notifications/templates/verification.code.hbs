@@ -1,0 +1,23 @@
+<!-- src/modules/notifications/templates/verification-code.hbs -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Verificação de E-mail</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; }
+    .container { max-width: 500px; margin: auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    .code { font-size: 32px; letter-spacing: 10px; text-align: center; margin: 20px 0; font-weight: bold; color: #2563eb; }
+    .footer { font-size: 12px; color: #666; margin-top: 30px; text-align: center; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Olá, {{name}}!</h1>
+    <p>Use o código abaixo para verificar seu e-mail:</p>
+    <div class="code">{{code}}</div>
+    <p><strong>Expira em {{expiresIn}}</strong></p>
+    <p class="footer">Se você não solicitou, ignore este e-mail.</p>
+  </div>
+</body>
+</html>

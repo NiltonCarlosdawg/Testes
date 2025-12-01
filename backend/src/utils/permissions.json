@@ -1,0 +1,108 @@
+{
+  "permissions": [
+    { "key": "users:create", "name": "Criar Usuários", "allowed": true },
+    { "key": "users:read", "name": "Ver Usuários", "allowed": true },
+    { "key": "users:update", "name": "Editar Usuários", "allowed": true },
+    { "key": "users:delete", "name": "Deletar Usuários", "allowed": true },
+    { "key": "users:manage_roles", "name": "Gerenciar Roles de Usuário", "allowed": true },
+
+    { "key": "roles:create", "name": "Criar Roles", "allowed": true },
+    { "key": "roles:read", "name": "Ver Roles", "allowed": true },
+    { "key": "roles:update", "name": "Editar Roles", "allowed": true },
+    { "key": "roles:delete", "name": "Deletar Roles", "allowed": true },
+
+    { "key": "enderecos:create", "name": "Criar Endereços", "allowed": true },
+    { "key": "enderecos:read", "name": "Ver Endereços", "allowed": true },
+    { "key": "enderecos:update", "name": "Editar Endereços", "allowed": true },
+    { "key": "enderecos:delete", "name": "Deletar Endereços", "allowed": true },
+
+    { "key": "sessoes_usuarios:read", "name": "Ver Sessões", "allowed": true },
+    { "key": "sessoes_usuarios:revoke", "name": "Revogar Sessão", "allowed": true },
+    { "key": "sessoes_usuarios:revoke_all", "name": "Revogar Todas as Sessões", "allowed": true },
+
+    { "key": "lojas:create", "name": "Criar Loja", "allowed": true },
+    { "key": "lojas:read", "name": "Ver Lojas", "allowed": true },
+    { "key": "lojas:update", "name": "Editar Loja", "allowed": true },
+    { "key": "lojas:delete", "name": "Deletar Loja", "allowed": true },
+    { "key": "lojas:approve", "name": "Aprovar Loja", "allowed": true },
+    { "key": "lojas:suspend", "name": "Suspender Loja", "allowed": true },
+
+    { "key": "categorias:create", "name": "Criar Categoria", "allowed": true },
+    { "key": "categorias:read", "name": "Ver Categorias", "allowed": true },
+    { "key": "categorias:update", "name": "Editar Categoria", "allowed": true },
+    { "key": "categorias:delete", "name": "Deletar Categoria", "allowed": true },
+
+    { "key": "produtos:create", "name": "Criar Produto", "allowed": true },
+    { "key": "produtos:read", "name": "Ver Produtos", "allowed": true },
+    { "key": "produtos:update", "name": "Editar Produto", "allowed": true },
+    { "key": "produtos:delete", "name": "Deletar Produto", "allowed": true },
+    { "key": "produtos:manage_stock", "name": "Gerenciar Estoque", "allowed": true },
+    { "key": "produtos:publish", "name": "Publicar Produto", "allowed": true },
+
+    { "key": "produto_variacoes:create", "name": "Criar Variação", "allowed": true },
+    { "key": "produto_variacoes:read", "name": "Ver Variações", "allowed": true },
+    { "key": "produto_variacoes:update", "name": "Editar Variação", "allowed": true },
+    { "key": "produto_variacoes:delete", "name": "Deletar Variação", "allowed": true },
+
+    { "key": "produto_imagens:create", "name": "Adicionar Imagem", "allowed": true },
+    { "key": "produto_imagens:read", "name": "Ver Imagens", "allowed": true },
+    { "key": "produto_imagens:update", "name": "Editar Imagem", "allowed": true },
+    { "key": "produto_imagens:delete", "name": "Remover Imagem", "allowed": true },
+
+    { "key": "produto_favoritos:read", "name": "Ver Favoritos", "allowed": true },
+    { "key": "produto_favoritos:add", "name": "Adicionar aos Favoritos", "allowed": true },
+    { "key": "produto_favoritos:remove", "name": "Remover dos Favoritos", "allowed": true },
+
+    { "key": "loja_avaliacoes:create", "name": "Avaliar Loja", "allowed": true },
+    { "key": "loja_avaliacoes:read", "name": "Ver Avaliações", "allowed": true },
+    { "key": "loja_avaliacoes:respond", "name": "Responder Avaliação", "allowed": true },
+    { "key": "loja_avaliacoes:delete", "name": "Deletar Avaliação", "allowed": true },
+
+    { "key": "pedidos:create", "name": "Criar Pedido", "allowed": true },
+    { "key": "pedidos:read", "name": "Ver Pedidos", "allowed": true },
+    { "key": "pedidos:update", "name": "Atualizar Pedido", "allowed": true },
+    { "key": "pedidos:cancel", "name": "Cancelar Pedido", "allowed": true },
+    { "key": "pedidos:confirm", "name": "Confirmar Pedido", "allowed": true },
+    { "key": "pedidos:ship", "name": "Marcar como Enviado", "allowed": true },
+    { "key": "pedidos:deliver", "name": "Marcar como Entregue", "allowed": true },
+
+    { "key": "pedido_itens:read", "name": "Ver Itens do Pedido", "allowed": true },
+
+    { "key": "produto_historico_precos:read", "name": "Ver Histórico de Preços", "allowed": true },
+
+    { "key": "filtro_opcoes:create", "name": "Criar Opção de Filtro", "allowed": true },
+    { "key": "filtro_opcoes:read", "name": "Ver Opções de Filtro", "allowed": true },
+    { "key": "filtro_opcoes:update", "name": "Editar Opção de Filtro", "allowed": true },
+    { "key": "filtro_opcoes:delete", "name": "Deletar Opção de Filtro", "allowed": true },
+
+    { "key": "mensagens:send", "name": "Enviar Mensagem", "allowed": true },
+    { "key": "mensagens:read", "name": "Ler Mensagens", "allowed": true },
+    { "key": "mensagens:mark_read", "name": "Marcar como Lida", "allowed": true },
+
+    { "key": "cupons:create", "name": "Criar Cupom", "allowed": true },
+    { "key": "cupons:read", "name": "Ver Cupons", "allowed": true },
+    { "key": "cupons:update", "name": "Editar Cupom", "allowed": true },
+    { "key": "cupons:delete", "name": "Deletar Cupom", "allowed": true },
+    { "key": "cupons:apply", "name": "Aplicar Cupom", "allowed": true },
+
+    { "key": "metodos_pagamento:create", "name": "Criar Método de Pagamento", "allowed": true },
+    { "key": "metodos_pagamento:read", "name": "Ver Métodos de Pagamento", "allowed": true },
+    { "key": "metodos_pagamento:update", "name": "Editar Método de Pagamento", "allowed": true },
+    { "key": "metodos_pagamento:delete", "name": "Deletar Método de Pagamento", "allowed": true },
+
+    { "key": "carrinho_itens:add", "name": "Adicionar ao Carrinho", "allowed": true },
+    { "key": "carrinho_itens:read", "name": "Ver Carrinho", "allowed": true },
+    { "key": "carrinho_itens:update", "name": "Atualizar Quantidade", "allowed": true },
+    { "key": "carrinho_itens:remove", "name": "Remover do Carrinho", "allowed": true },
+
+    { "key": "notificacoes:read", "name": "Ver Notificações", "allowed": true },
+    { "key": "notificacoes:mark_read", "name": "Marcar Notificação como Lida", "allowed": true },
+    { "key": "notificacoes:delete", "name": "Deletar Notificação", "allowed": true },
+
+    { "key": "activity_logs:read", "name": "Ver Logs de Atividade", "allowed": true },
+
+    { "key": "produto_selections:create", "name": "Criar Seleção de Produtos", "allowed": true },
+    { "key": "produto_selections:read", "name": "Ver Seleção de Produtos", "allowed": true },
+    { "key": "produto_selections:delete", "name": "Deletar Seleção", "allowed": true }
+  ]
+}

@@ -1,0 +1,157 @@
+name: Backend CI/CD
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "backend/**"
+      - ".github/workflows/backend-cicd.yml"
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "backend/**"
+
+env:
+  NODE_ENV: production
+  BACKEND_DIR: backend
+
+jobs:
+  test:
+    name: Test & Lint
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.bun
+            backend/node_modules
+          key: ${{ runner.os }}-bun-backend-${{ hashFiles('backend/bun.lockb') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-backend-
+
+      - name: Install dependencies
+        run: bun install
+        working-directory: ./backend
+
+      - name: Run linter
+        run: bun run lint
+        working-directory: ./backend
+        continue-on-error: false
+
+      - name: Type check
+        run: bunx tsc --noEmit
+        working-directory: ./backend
+
+      - name: Build project
+        run: bun run build
+        working-directory: ./backend
+
+  deploy:
+    name: Deploy to VPS
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    
+    steps:
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -p ${{ secrets.SSH_PORT || '22' }} ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy on VPS
+        run: |
+          ssh -i ~/.ssh/deploy_key \
+              -p ${{ secrets.SSH_PORT || '22' }} \
+              ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} bash << 'ENDSSH'
+            set -e
+            
+            REPO_PATH="/home/edgar/calungasoft/e-commerce"
+            DEPLOY_PATH="$REPO_PATH/backend"
+            PM2_APP_NAME="backend"
+            
+            # Se não existir o repo, clonar
+            if [ ! -d "$REPO_PATH" ]; then
+              echo "Repository not found, cloning..."
+              cd /home/edgar/calungasoft
+              git clone ${{ secrets.REPO_URL }} e-commerce
+            fi
+            
+            cd "$REPO_PATH"
+            
+            # Reset e pull das mudanças
+            echo "Fetching latest changes..."
+            git fetch origin
+            git reset --hard origin/main
+            
+            cd "$DEPLOY_PATH"
+            
+            echo "Installing dependencies..."
+            export PATH=$HOME/.bun/bin:$PATH
+            bun install
+            
+            echo "Building project..."
+            bun run build
+            
+            echo "Copying .env from parent directory..."
+            cp /home/edgar/calungasoft/.env "$DEPLOY_PATH/.env"
+            
+            echo "Restarting application with PM2..."
+            pm2 delete $PM2_APP_NAME || true
+            pm2 start bun --name $PM2_APP_NAME -- run start
+            pm2 save
+            
+            echo "Backend deploy completed!"
+          ENDSSH
+
+      - name: Health check
+        run: |
+          ssh -i ~/.ssh/deploy_key \
+              -p ${{ secrets.SSH_PORT || '22' }} \
+              ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} bash << 'ENDSSH'
+            set -e
+            
+            echo "Waiting for application to start..."
+            sleep 10
+            
+            export PATH=$HOME/.bun/bin:$PATH
+            pm2 status
+            
+            HEALTH_URL="${{ secrets.BACKEND_URL || 'http://localhost:3001' }}/api/v1/health"
+            echo "Health check at $HEALTH_URL..."
+            
+            for i in {1..5}; do
+              if curl -f -s "$HEALTH_URL" > /dev/null; then
+                echo "Health check passed!"
+                curl -s "$HEALTH_URL"
+                exit 0
+              fi
+              echo "Attempt $i/5 failed, waiting..."
+              sleep 5
+            done
+            
+            echo "Health check failed after 5 attempts"
+            pm2 logs backend --lines 50
+            exit 1
+          ENDSSH
+
+      - name: Notify deployment
+        if: always()
+        run: |
+          if [ "${{ job.status }}" == "success" ]; then
+            echo "Backend deployed successfully!"
+          else
+            echo "Backend deployment failed!"
+          fi

@@ -1,0 +1,42 @@
+<h2>
+  <svg style="display: inline-block; width: 32px; height: 32px; vertical-align: middle; margin-right: 8px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  Verificação de Email
+</h2>
+<p>Olá, <strong style="color: #3F51B5;">{{nomeUsuario}}</strong>!</p>
+<p style="font-size: 17px;">Obrigado por se cadastrar! Para começar a usar todos os recursos da nossa plataforma, precisamos verificar seu endereço de email.</p>
+<div class="info-box" style="border-left-color: #2196F3; background: rgba(33, 150, 243, 0.1);">
+  <p style="display: flex; align-items: center; gap: 12px; color: #3F51B5; font-weight: 600;">
+    <svg style="width: 28px; height: 28px; flex-shrink: 0; color: #2196F3;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span style="font-size: 16px; color: #3F51B5;">Falta apenas um passo para ativar sua conta!</span>
+  </p>
+</div>
+<a href="{{verificationLink}}" class="button">
+  <svg style="display: inline-block; width: 18px; height: 18px; vertical-align: middle; margin-right: 8px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  Verificar Meu Email
+</a>
+<p style="margin-top: 24px; color: #555555; font-size: 14px;">
+  Ou copie e cole este link no seu navegador:
+</p>
+<p style="word-break: break-all; color: #2196F3; font-size: 13px; font-weight: 500; background: rgba(33, 150, 243, 0.1); padding: 12px; border-radius: 8px; border: 1px solid rgba(33, 150, 243, 0.2);">
+  {{verificationLink}}
+</p>
+{{#if expiresIn}}
+<div style="display: flex; align-items: center; gap: 12px; margin-top: 24px; padding: 12px; background: rgba(255, 183, 77, 0.1); border-radius: 8px; border: 1px solid rgba(255, 183, 77, 0.2);">
+  <svg style="width: 20px; height: 20px; color: #FF9800;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <p style="color: #FF9800; font-size: 14px; margin: 0;">
+    Este link expira em {{expiresIn}}
+  </p>
+</div>
+{{/if}}
+<div class="divider"></div>
+<p style="color: #777777; font-size: 14px; opacity: 0.8;">
+  Se você não criou uma conta, pode ignorar este email com segurança.
+</p>

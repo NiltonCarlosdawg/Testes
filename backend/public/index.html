@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="pt" class="h-full scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SuperAdmin - KITROCA</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+      body { font-family: "Inter", sans-serif; }
+    </style>
+  </head>
+  <body class="h-full bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+    <div class="flex min-h-screen">
+      <!-- Sidebar -->
+      <aside class="w-64 bg-gray-900 dark:bg-gray-950 text-white flex flex-col border-r border-gray-800">
+        <div class="h-16 flex items-center justify-center text-2xl font-bold border-b border-gray-800">
+          KI<span class="text-indigo-400">TROCA</span>
+        </div>
+        <nav class="flex-1 px-4 py-6 space-y-2">
+          <a href="/api/v1/dashboard/index.html" class="flex items-center gap-3 px-4 py-3 rounded-lg bg-indigo-600 text-white">
+            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/></svg>
+            <span>Dashboard</span>
+          </a>
+          <a href="/api/v1/dashboard/roles.html" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors">
+            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0012 11z" clip-rule="evenodd"/></svg>
+            <span>Roles & Permissões</span>
+          </a>
+          <a href="/api/v1/dashboard/lojas.html" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-800 transition-colors">
+            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/></svg>
+            <span>Lojas</span>
+          </a>
+        </nav>
+      </aside>
+
+      <div class="flex-1 flex flex-col">
+        <!-- Header -->
+        <header class="bg-white dark:bg-gray-950 shadow-sm h-16 flex items-center justify-between px-6 border-b border-gray-200 dark:border-gray-800">
+          <h1 class="text-2xl font-bold text-gray-900 dark:text-white">SuperAdmin Dashboard</h1>
+          <div class="flex items-center gap-4">
+            <span id="user-email" class="text-sm font-medium text-gray-600 dark:text-gray-400"></span>
+            <button id="logout-button" class="bg-red-600 hover:bg-red-700 text-white font-semibold text-sm py-2 px-4 rounded-lg transition-all">
+              Logout
+            </button>
+          </div>
+        </header>
+<main class="flex-1 p-6 lg:p-8 overflow-y-auto">
+  <!-- Feedback -->
+  <div id="add-user-feedback" class="hidden mb-6 p-4 text-sm rounded-lg bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400"></div>
+
+  <!-- Cards de Estatísticas -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div class="bg-white dark:bg-gray-950 p-6 rounded-2xl shadow-md border border-gray-200 dark:border-gray-800">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-sm text-gray-600 dark:text-gray-400">Total de Usuários</p>
+          <p id="total-users" class="text-3xl font-bold text-indigo-600">0</p>
+        </div>
+        <div class="bg-indigo-100 dark:bg-indigo-900/30 p-3 rounded-full">
+          <svg class="w-8 h-8 text-indigo-600" fill="currentColor" viewBox="0 0 20 20"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+        </div>
+      </div>
+    </div>
+    <div class="bg-white dark:bg-gray-950 p-6 rounded-2xl shadow-md border border-gray-200 dark:border-gray-800">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-sm text-gray-600 dark:text-gray-400">Usuários Ativos</p>
+          <p id="active-users" class="text-3xl font-bold text-green-600">0</p>
+        </div>
+        <div class="bg-green-100 dark:bg-green-900/30 p-3 rounded-full">
+          <svg class="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+        </div>
+      </div>
+    </div>
+    <div class="bg-white dark:bg-gray-950 p-6 rounded-2xl shadow-md border border-gray-200 dark:border-gray-800">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-sm text-gray-600 dark:text-gray-400">Total de Roles</p>
+          <p id="total-roles" class="text-3xl font-bold text-purple-600">0</p>
+        </div>
+        <div class="bg-purple-100 dark:bg-purple-900/30 p-3 rounded-full">
+          <svg class="w-8 h-8 text-purple-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>
+        </div>
+      </div>
+    </div>
+    <div class="bg-white dark:bg-gray-950 p-6 rounded-2xl shadow-md border border-gray-200 dark:border-gray-800">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-sm text-gray-600 dark:text-gray-400">Último Acesso</p>
+          <p class="text-lg font-semibold text-gray-700 dark:text-gray-300">Agora</p>
+        </div>
+        <div class="bg-blue-100 dark:bg-blue-900/30 p-3 rounded-full">
+          <svg class="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.414-1.414L11 9.586V6z" clip-rule="evenodd"/></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gráfico + Ações Rápidas -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+    <!-- Gráfico -->
+    <div class="lg:col-span-2 bg-white dark:bg-gray-950 p-6 rounded-2xl shadow-md border border-gray-200 dark:border-gray-800">
+      <h3 class="text-lg font-semibold mb-4">Crescimento de Usuários (2025)</h3>
+      <div class="relative w-full pt-[56%] overflow-hidden rounded-lg bg-gray-50 dark:bg-gray-900">
+        <div class="absolute inset-0">
+          <canvas id="usersChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ações Rápidas -->
+    <div class="bg-white dark:bg-gray-950 p-6 rounded-2xl shadow-md border border-gray-200 dark:border-gray-800">
+      <h3 class="text-lg font-semibold mb-4">Ações Rápidas</h3>
+      <div class="space-y-4">
+        <a href="/api/v1/dashboard/roles.html" class="block p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg hover:bg-indigo-100 dark:hover:bg-indigo-900/40 transition text-center">
+          <p class="font-medium text-indigo-700 dark:text-indigo-400">Gerenciar Roles</p>
+        </a>
+        <button onclick="document.getElementById('add-user-section').scrollIntoView({behavior:'smooth'})" class="w-full p-4 bg-green-50 dark:bg-green-900/20 rounded-lg hover:bg-green-100 dark:hover:bg-green-900/40 transition">
+          <p class="font-medium text-green-700 dark:text-green-400">Adicionar Novo Usuário</p>
+        </button>
+        <a href="/api/v1/dashboard/lojas.html" class="block p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg hover:bg-purple-100 dark:hover:bg-purple-900/40 transition text-center">
+          <p class="font-medium text-purple-700 dark:text-purple-400">Gerenciar Lojas</p>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Formulário + Tabela (lado a lado em telas grandes) -->
+  <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
+    <!-- Formulário de Adicionar Usuário -->
+    <div id="add-user-section" class="bg-white dark:bg-gray-950 p-6 rounded-2xl shadow-md border border-gray-200 dark:border-gray-800">
+      <h2 class="text-xl font-semibold mb-6">Adicionar Novo Utilizador</h2>
+      <form id="add-user-form" class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+        <!-- Todos os campos exatamente como estavam antes -->
+        <div><label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Nome Completo</label><input type="text" id="nomeCompleto" required class="w-full p-2 border rounded-lg bg-white dark:bg-gray-800 focus:ring-2 focus:ring-indigo-500"></div>
+        <div><label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Username</label><input type="text" id="username" required class="w-full p-2 border rounded-lg bg-white dark:bg-gray-800 focus:ring-2 focus:ring-indigo-500"></div>
+        <div><label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Email</label><input type="email" id="email" required class="w-full p-2 border rounded-lg bg-white dark:bg-gray-800 focus:ring-2 focus:ring-indigo-500"></div>
+        <div><label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Password</label><input type="password" id="password" required class="w-full p-2 border rounded-lg bg-white dark:bg-gray-800 focus:ring-2 focus:ring-indigo-500"></div>
+        <div><label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Telefone</label><input type="text" id="telefone" class="w-full p-2 border rounded-lg bg-white dark:bg-gray-800 focus:ring-2 focus:ring-indigo-500"></div>
+        <div><label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Endereço</label><input type="text" id="endereco" class="w-full p-2 border rounded-lg bg-white dark:bg-gray-800 focus:ring-2 focus:ring-indigo-500"></div>
+        <div class="md:col-span-2">
+          <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Role</label>
+          <select id="roleId" required class="w-full p-2 border rounded-lg bg-white dark:bg-gray-800 focus:ring-2 focus:ring-indigo-500"><option value="">Selecione uma Role</option></select>
+        </div>
+        <div class="md:col-span-2">
+          <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-lg transition">Adicionar Utilizador</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Lista de Usuários -->
+    <div class="bg-white dark:bg-gray-950 rounded-2xl shadow-md border border-gray-200 dark:border-gray-800 overflow-hidden">
+      <div class="p-6 border-b border-gray-200 dark:border-gray-800">
+        <h2 class="text-xl font-semibold">Lista de Utilizadores</h2>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="min-w-full text-sm">
+          <thead class="bg-gray-50 dark:bg-gray-900">
+            <tr>
+              <th class="py-4 px-6 text-left font-semibold text-gray-600 dark:text-gray-400">Nome Completo</th>
+              <th class="py-4 px-6 text-left font-semibold text-gray-600 dark:text-gray-400">Username</th>
+              <th class="py-4 px-6 text-left font-semibold text-gray-600 dark:text-gray-400">Email</th>
+              <th class="py-4 px-6 text-left font-semibold text-gray-600 dark:text-gray-400">Ativo</th>
+            </tr>
+          </thead>
+          <tbody id="accountants-table-body" class="divide-y divide-gray-200 dark:divide-gray-800"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</main>
+      </div>
+    </div>
+
+    <script src="/api/v1/dashboard/dashboard.js"></script>
+  </body>
+</html>

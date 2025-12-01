@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preview de Email Templates</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 40px 20px;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    h1 {
+      color: white;
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 36px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .tab-button {
+      background: rgba(255,255,255,0.2);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+    .tab-button:hover {
+      background: rgba(255,255,255,0.3);
+      transform: translateY(-2px);
+    }
+    .tab-button.active {
+      background: white;
+      color: #667eea;
+    }
+    .email-preview {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      overflow: hidden;
+      display: none;
+    }
+    .email-preview.active {
+      display: block;
+    }
+    .preview-header {
+      background: #f8f9fa;
+      padding: 20px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .preview-header p {
+      color: #666;
+      font-size: 14px;
+      margin: 5px 0;
+    }
+    .preview-header strong {
+      color: #333;
+    }
+    iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+    }
+    
+    /* Email Styles - Replicando os templates */
+    .email-wrapper {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #ffffff;
+    }
+    .email-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 40px 30px;
+      text-align: center;
+    }
+    .email-header h1 {
+      color: #ffffff;
+      font-size: 28px;
+      font-weight: 600;
+      margin: 0;
+      text-shadow: none;
+    }
+    .email-body {
+      padding: 40px 30px;
+    }
+    .email-body h2 {
+      color: #333333;
+      font-size: 24px;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+    .email-body p {
+      color: #666666;
+      font-size: 16px;
+      margin-bottom: 15px;
+      line-height: 1.8;
+    }
+    .button {
+      display: inline-block;
+      padding: 14px 32px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #ffffff !important;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 16px;
+      margin: 20px 0;
+    }
+    .info-box {
+      background-color: #f8f9fa;
+      border-left: 4px solid #667eea;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 4px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+    }
+    .badge-danger { background-color: #ffebee; color: #d32f2f; }
+    .badge-warning { background-color: #fff3e0; color: #f57c00; }
+    .email-footer {
+      background-color: #f8f9fa;
+      padding: 30px;
+      text-align: center;
+      border-top: 1px solid #e0e0e0;
+    }
+    .email-footer p {
+      color: #999999;
+      font-size: 14px;
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📧 Preview de Email Templates</h1>
+    
+    <div class="tabs">
+      <button class="tab-button active" onclick="showEmail('notification')">🔔 Notificação</button>
+      <button class="tab-button" onclick="showEmail('welcome')">🎉 Boas-vindas</button>
+      <button class="tab-button" onclick="showEmail('reset')">🔐 Reset Senha</button>
+      <button class="tab-button" onclick="showEmail('verify')">✉️ Verificação</button>
+      <button class="tab-button" onclick="showEmail('order')">🛍️ Pedido</button>
+    </div>
+
+    <!-- NOTIFICAÇÃO -->
+    <div id="notification" class="email-preview active">
+      <div class="preview-header">
+        <p><strong>De:</strong> Sua Empresa &lt;contato@empresa.com&gt;</p>
+        <p><strong>Para:</strong> usuario@example.com</p>
+        <p><strong>Assunto:</strong> 🔔 Atualização de Segurança</p>
+      </div>
+      <div class="email-wrapper">
+        <div class="email-header">
+          <h1>Sua Empresa</h1>
+        </div>
+        <div class="email-body">
+          <span class="badge badge-danger">🔒 Segurança</span>
+          <h2>Olá, João Silva!</h2>
+          <p>Você tem uma nova notificação:</p>
+          <div class="info-box">
+            <p style="font-size: 18px; font-weight: 600; color: #333; margin-bottom: 10px;">
+              Sua senha foi alterada com sucesso
+            </p>
+            <p style="margin-top: 10px;">Por segurança, recomendamos que você revise suas configurações de conta.</p>
+          </div>
+          <a href="#" class="button">Ver Detalhes</a>
+          <p style="margin-top: 30px; color: #999; font-size: 14px;">
+            Esta notificação foi gerada automaticamente pelo sistema.
+          </p>
+        </div>
+        <div class="email-footer">
+          <p><strong>Sua Empresa</strong></p>
+          <p>contato@empresa.com | (11) 1234-5678</p>
+          <p style="margin-top: 20px; font-size: 12px;">© 2025 Sua Empresa. Todos os direitos reservados.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOAS-VINDAS -->
+    <div id="welcome" class="email-preview">
+      <div class="preview-header">
+        <p><strong>De:</strong> Sua Empresa &lt;contato@empresa.com&gt;</p>
+        <p><strong>Para:</strong> novousuario@example.com</p>
+        <p><strong>Assunto:</strong> 🎉 Bem-vindo(a) à Sua Empresa!</p>
+      </div>
+      <div class="email-wrapper">
+        <div class="email-header">
+          <h1>Sua Empresa</h1>
+        </div>
+        <div class="email-body">
+          <h2>Bem-vindo(a), Maria! 🎉</h2>
+          <p>Estamos muito felizes em ter você conosco! Sua conta foi criada com sucesso.</p>
+          <div class="info-box">
+            <p><strong>Email cadastrado:</strong> maria@example.com</p>
+          </div>
+          <p>Aqui estão algumas coisas que você pode fazer para começar:</p>
+          <ul style="color: #666; margin: 20px 0; padding-left: 20px;">
+            <li style="margin: 10px 0;">Complete seu perfil</li>
+            <li style="margin: 10px 0;">Explore nossos recursos</li>
+            <li style="margin: 10px 0;">Configure suas preferências</li>
+          </ul>
+          <a href="#" class="button">Acessar Minha Conta</a>
+          <p style="color: #999; font-size: 14px; margin-top: 30px;">
+            Se você não criou esta conta, por favor ignore este email.
+          </p>
+        </div>
+        <div class="email-footer">
+          <p><strong>Sua Empresa</strong></p>
+          <p>contato@empresa.com | (11) 1234-5678</p>
+          <p style="margin-top: 20px; font-size: 12px;">© 2025 Sua Empresa. Todos os direitos reservados.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESET SENHA -->
+    <div id="reset" class="email-preview">
+      <div class="preview-header">
+        <p><strong>De:</strong> Sua Empresa &lt;contato@empresa.com&gt;</p>
+        <p><strong>Para:</strong> usuario@example.com</p>
+        <p><strong>Assunto:</strong> 🔐 Redefinição de Senha</p>
+      </div>
+      <div class="email-wrapper">
+        <div class="email-header">
+          <h1>Sua Empresa</h1>
+        </div>
+        <div class="email-body">
+          <h2>Redefinição de Senha 🔐</h2>
+          <p>Olá, João Silva!</p>
+          <p>Recebemos uma solicitação para redefinir a senha da sua conta.</p>
+          <div class="info-box" style="border-left-color: #f57c00; background-color: #fff3e0;">
+            <p style="color: #e65100;">
+              <strong>⚠️ Este link expira em 1 hora</strong>
+            </p>
+          </div>
+          <a href="#" class="button">Redefinir Minha Senha</a>
+          <p style="color: #d32f2f; font-weight: 600; font-size: 14px; margin-top: 30px;">
+            🔒 Por razões de segurança, nunca compartilhe este link com ninguém.
+          </p>
+        </div>
+        <div class="email-footer">
+          <p><strong>Sua Empresa</strong></p>
+          <p>contato@empresa.com | (11) 1234-5678</p>
+          <p style="margin-top: 20px; font-size: 12px;">© 2025 Sua Empresa. Todos os direitos reservados.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- VERIFICAÇÃO -->
+    <div id="verify" class="email-preview">
+      <div class="preview-header">
+        <p><strong>De:</strong> Sua Empresa &lt;contato@empresa.com&gt;</p>
+        <p><strong>Para:</strong> novousuario@example.com</p>
+        <p><strong>Assunto:</strong> ✉️ Verifique seu Email</p>
+      </div>
+      <div class="email-wrapper">
+        <div class="email-header">
+          <h1>Sua Empresa</h1>
+        </div>
+        <div class="email-body">
+          <h2>Verificação de Email ✉️</h2>
+          <p>Olá, Ana!</p>
+          <p>Para começar a usar todos os recursos da nossa plataforma, precisamos verificar seu endereço de email.</p>
+          <div class="info-box" style="border-left-color: #4caf50;">
+            <p style="color: #2e7d32;">
+              <strong>✓ Só falta um passo para ativar sua conta!</strong>
+            </p>
+          </div>
+          <a href="#" class="button">Verificar Meu Email</a>
+          <p style="color: #f57c00; font-size: 14px; margin-top: 20px;">
+            ⏱️ Este link expira em 24 horas
+          </p>
+        </div>
+        <div class="email-footer">
+          <p><strong>Sua Empresa</strong></p>
+          <p>contato@empresa.com | (11) 1234-5678</p>
+          <p style="margin-top: 20px; font-size: 12px;">© 2025 Sua Empresa. Todos os direitos reservados.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PEDIDO -->
+    <div id="order" class="email-preview">
+      <div class="preview-header">
+        <p><strong>De:</strong> Sua Empresa &lt;vendas@empresa.com&gt;</p>
+        <p><strong>Para:</strong> cliente@example.com</p>
+        <p><strong>Assunto:</strong> 🎉 Pedido #2025-001 Confirmado!</p>
+      </div>
+      <div class="email-wrapper">
+        <div class="email-header">
+          <h1>Sua Empresa</h1>
+        </div>
+        <div class="email-body">
+          <h2>Pedido Confirmado! 🎉</h2>
+          <p>Olá, Pedro!</p>
+          <p>Seu pedido foi confirmado e está sendo processado.</p>
+          <div class="info-box">
+            <p><strong>Número do Pedido:</strong> #2025-001</p>
+            <p><strong>Data do Pedido:</strong> 06/11/2025</p>
+          </div>
+          <table style="width: 100%; border-collapse: collapse; margin: 30px 0;">
+            <thead>
+              <tr style="background-color: #f8f9fa; border-bottom: 2px solid #e0e0e0;">
+                <th style="padding: 12px; text-align: left; font-size: 14px;">Item</th>
+                <th style="padding: 12px; text-align: center; font-size: 14px;">Qtd</th>
+                <th style="padding: 12px; text-align: right; font-size: 14px;">Preço</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom: 1px solid #e0e0e0;">
+                <td style="padding: 12px; font-size: 14px;">Produto Premium A</td>
+                <td style="padding: 12px; text-align: center; font-size: 14px;">2</td>
+                <td style="padding: 12px; text-align: right; font-size: 14px;">R$ 199,80</td>
+              </tr>
+              <tr style="border-bottom: 1px solid #e0e0e0;">
+                <td style="padding: 12px; font-size: 14px;">Produto Especial B</td>
+                <td style="padding: 12px; text-align: center; font-size: 14px;">1</td>
+                <td style="padding: 12px; text-align: right; font-size: 14px;">R$ 149,90</td>
+              </tr>
+            </tbody>
+          </table>
+          <table style="width: 100%; border-top: 2px solid #e0e0e0; padding-top: 15px;">
+            <tr>
+              <td style="padding: 8px; font-size: 14px; color: #666;">Subtotal:</td>
+              <td style="padding: 8px; text-align: right; font-size: 14px;">R$ 349,70</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px; font-size: 14px; color: #666;">Frete:</td>
+              <td style="padding: 8px; text-align: right; font-size: 14px;">R$ 25,00</td>
+            </tr>
+            <tr style="border-top: 2px solid #667eea;">
+              <td style="padding: 12px; font-size: 18px; font-weight: 600; color: #333;">Total:</td>
+              <td style="padding: 12px; text-align: right; font-size: 18px; font-weight: 600; color: #667eea;">R$ 374,70</td>
+            </tr>
+          </table>
+          <a href="#" class="button">Rastrear Pedido</a>
+        </div>
+        <div class="email-footer">
+          <p><strong>Sua Empresa</strong></p>
+          <p>vendas@empresa.com | (11) 1234-5678</p>
+          <p style="margin-top: 20px; font-size: 12px;">© 2025 Sua Empresa. Todos os direitos reservados.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showEmail(type) {
+      // Remove active de todos
+      document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.email-preview').forEach(preview => preview.classList.remove('active'));
+      
+      // Adiciona active no selecionado
+      event.target.classList.add('active');
+      document.getElementById(type).classList.add('active');
+    }
+  </script>
+</body>
+</html>
